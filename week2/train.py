@@ -28,12 +28,14 @@ def run_train(data_path: str):
         # mlflow.set_tag("dev", "wasawat")
 
         rf = RandomForestRegressor(max_depth=10, random_state=0)
+        # tag each parameter
         # mlflow.log_param("max_depth", max_depth)
 
         rf.fit(X_train, y_train)
         y_pred = rf.predict(X_val)
 
         rmse = mean_squared_error(y_val, y_pred, squared=False)
+        # tag each metric
         # mlflow.log_metric("rmse", rmse)
         
 

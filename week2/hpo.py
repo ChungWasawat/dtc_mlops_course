@@ -8,7 +8,9 @@ from optuna.samplers import TPESampler
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import mean_squared_error
 
+# the same uri as setting with "--backend-store-uri" option
 mlflow.set_tracking_uri("http://127.0.0.1:5000")
+# experiment name
 mlflow.set_experiment("random-forest-hyperopt")
 
 
@@ -34,7 +36,9 @@ def run_optimization(data_path: str, num_trials: int):
     X_val, y_val = load_pickle(os.path.join(data_path, "val.pkl"))
 
     def objective(trial):
+        # start tracking with mlflow
         with mlflow.start_run():
+            # a tag for model, other examples: set a name of developer, etc.
             mlflow.set_tag("rmse", "val_dataset")
             params = {
                 'n_estimators': trial.suggest_int('n_estimators', 10, 50, 1),
