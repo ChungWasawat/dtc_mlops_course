@@ -57,17 +57,24 @@ def train_and_log_model(data_path, params):
 )
 def run_register_model(data_path: str, top_n: int):
 
+    # can set tracking uri here
     client = MlflowClient()
 
     # Retrieve the top_n model runs and log the models
+    # client.list_experiments() to see all experiments
+    # client.create_experiment(name"NAME") to create a new experiment
     experiment = client.get_experiment_by_name(HPO_EXPERIMENT_NAME)
     runs = client.search_runs(
         experiment_ids=experiment.experiment_id,
-        run_view_type=ViewType.ACTIVE_ONLY,
+        # filter_string="metrics.rmse < 6.8",
+        run_view_type=ViewType.ACTIVE_ONLY, 
+        # how many runs to return
         max_results=top_n,
         order_by=["metrics.rmse ASC"]
     )
     for run in runs:
+        # run.info.run_id is the id of the run
+        # run.data.metrics["rmse"] 
         train_and_log_model(data_path=data_path, params=run.data.params)
 
     # Select the model with the lowest test RMSE
@@ -77,14 +84,18 @@ def run_register_model(data_path: str, top_n: int):
         run_view_type=ViewType.ACTIVE_ONLY,
         max_results=top_n,
         order_by=["metrics.test_rmse ASC"]       
-      )[0]
+    )[0]
 
     best_model_uri = f"runs:/{best_run.info.run_id}/model"
     # Register the best model
     mlflow.register_model( 
         model_uri=best_model_uri,
         name="nyc-taxi-random-forest-model",
-     )
+    )
+    # client.list_registered_models() to see all registered models
+    # latest_ver = client.get_latest_versions(name="MODEL_NAME", stages=["Staging"])
+    # ver = laest_ver[0] -> ver.current_stage 
+    # client.transition_model_version_stage(name="MODEL_NAME", version=ver.version, stage="Production", archive_existing_versions=True)
 
 
 if __name__ == '__main__':

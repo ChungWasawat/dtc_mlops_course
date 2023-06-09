@@ -28,7 +28,7 @@ def run_train(data_path: str):
         # mlflow.set_tag("dev", "wasawat")
 
         rf = RandomForestRegressor(max_depth=10, random_state=0)
-        # tag each parameter
+        # tag each parameter (1 by 1) or pass parameters as a dictionary
         # mlflow.log_param("max_depth", max_depth)
 
         rf.fit(X_train, y_train)
@@ -38,7 +38,13 @@ def run_train(data_path: str):
         # tag each metric
         # mlflow.log_metric("rmse", rmse)
         
-
+        # store model 
+        # local path: where the model is, artifact path: where the model is stored in mlflow
+        # results = only the binary file
+        # mlflow.log_artifact(local_path="models/lin_reg.bin", artifact_path="models_pickle")
+        # or use model instead of local path
+        # results = model + conda.yaml (a version of packages) + MLmodel + requirements.txt
+        # mlflow.xgboost.log_model(booster, artifact_path="models_mlflow")
 
 
 

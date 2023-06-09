@@ -5,6 +5,8 @@ import xgboost as xgb
 from hyperopt import fmin, tpe, hp, STATUS_OK, Trials
 from hyperopt.pyll import scope
 
+import pickle
+
 # hyperopt: use bayesian method to find the best hyperparameters
 # fmin: optimising hyperparameters by minimising an output
 # tpe: tree of parzen estimator(?) algorithm to control the logic/ run the optimisation
@@ -56,3 +58,33 @@ best_result = fmin(
     max_evals=50,
     trials=Trials()
 )
+
+# record date when the model is transitioned and update other information
+from datetime import datetime
+
+date = datetime.today().date()
+client.update_model_version(
+    name=model_name,
+    version=model_version,
+    description=f"The model version {model_version} was transitioned to {new_stage} on {date}"
+)
+
+
+# to load the model and test it
+def test_model(name, stage, X_test, y_test):
+    model = mlflow.pyfunc.load_model(f"models:/{name}/{stage}")
+    y_pred = model.predict(X_test)
+    return {"rmse": mean_squared_error(y_test, y_pred, squared=False)}
+
+%time test_model(name=model_name, stage="Production", X_test=X_test, y_test=y_test) #%time only works in jupyter notebook?
+
+# transform new data
+client.download_artifacts(run_id=run_id, path='preprocessor', dst_path='.')
+
+with open("preprocessor/preprocessor.b", "rb") as f_in:
+    dv = pickle.load(f_in)
+
+X_test = preprocess(df, dv)
+
+target = "duration"
+y_test = df[target].values

@@ -5,5 +5,7 @@
 ### ML FLow
     * to choose the best model, aware of duration, size of model
 
-    * use [MLFLOW autolog](https://mlflow.org/docs/latest/tracking.html#automatic-logging) to log all information about experiment
+use [MLFLOW autolog](https://mlflow.org/docs/latest/tracking.html#automatic-logging) to log all information about experiment
+
+    * use log_artifact to save preprocessor model (dictVector) and log_model to save model
 
