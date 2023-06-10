@@ -76,7 +76,7 @@ def test_model(name, stage, X_test, y_test):
     y_pred = model.predict(X_test)
     return {"rmse": mean_squared_error(y_test, y_pred, squared=False)}
 
-%time test_model(name=model_name, stage="Production", X_test=X_test, y_test=y_test) #%time only works in jupyter notebook?
+# %time test_model(name=model_name, stage="Production", X_test=X_test, y_test=y_test) #%time only works in jupyter notebook?
 
 # transform new data
 client.download_artifacts(run_id=run_id, path='preprocessor', dst_path='.')
