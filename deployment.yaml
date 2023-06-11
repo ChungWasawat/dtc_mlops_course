@@ -1,0 +1,6 @@
+deployments:
+- name: taxi-xgb-model
+  entrypoint: week3/orchestrate_hw.py:main_flow
+  work_pool:
+    name: dtc-course-pool
+

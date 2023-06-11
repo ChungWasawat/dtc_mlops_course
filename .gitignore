@@ -1,7 +1,10 @@
-#mlflow
+# mlflow
 mlartifacts/
 mlruns/
 mlflow.db
+
+# key
+key.txt
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
