@@ -131,7 +131,11 @@ def train_best_model(
 
 
 @flow
-def main_flow(months: list, year: int, color: str) -> None:
+def main_flow(
+    months: list = [1,2], 
+    year: int = 2023, 
+    color: str = "green"
+    ) -> None:
     """The main training pipeline"""
     train_path = f"./data/{color}_tripdata_{year}-{months[0]:02}.parquet",
     val_path = f"./data/{color}_tripdata_{year}-{months[1]:02}.parquet",
