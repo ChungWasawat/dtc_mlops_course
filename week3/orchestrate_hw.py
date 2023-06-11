@@ -16,7 +16,6 @@ from datetime import date
 @task(retries=3, retry_delay_seconds=2)
 def read_data(filename: str) -> pd.DataFrame:
     """Read data into DataFrame"""
-    print(type(filename))
     df = pd.read_parquet(filename)
 
     df.lpep_dropoff_datetime = pd.to_datetime(df.lpep_dropoff_datetime)
@@ -141,6 +140,7 @@ def main_flow(
     train_path = f"./data/{color}_tripdata_{year}-{months[0]:02}.parquet",
     val_path = f"./data/{color}_tripdata_{year}-{months[1]:02}.parquet",
 
+    print("1 ", train_path,"\n2 ", val_path)
     # MLflow settings
     mlflow.set_tracking_uri("sqlite:///mlflow.db")
     mlflow.set_experiment("nyc-taxi-experiment")
