@@ -4,3 +4,9 @@ deployments:
   work_pool:
     name: dtc-course-pool
 
+- name: send-noti-email
+  entrypoint: week3/send_email.py:send_email
+  work_pool:
+    name: dtc-course-pool
+
+

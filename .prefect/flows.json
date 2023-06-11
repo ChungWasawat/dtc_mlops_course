@@ -1,3 +1,4 @@
 {
-  "main-flow": "week3\\orchestrate_hw.py:main_flow"
+  "main-flow": "week3\\orchestrate_hw.py:main_flow",
+  "send-email": "week3\\send_email.py:send_email"
 }
