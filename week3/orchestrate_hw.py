@@ -137,8 +137,8 @@ def main_flow(
     color: str = "green"
     ) -> None:
     """The main training pipeline"""
-    train_path = f"./data/{color}_tripdata_{year}-{months[0]:02}.parquet",
-    val_path = f"./data/{color}_tripdata_{year}-{months[1]:02}.parquet",
+    train_path = f"./data/{color}_tripdata_{year}-{months[0]:02}.parquet"
+    val_path = f"./data/{color}_tripdata_{year}-{months[1]:02}.parquet"
 
     print("1 ", train_path,"\n2 ", val_path)
     # MLflow settings
