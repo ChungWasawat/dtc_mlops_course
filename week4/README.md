@@ -1,5 +1,15 @@
-# Hands-on
-
+# Hands-on    
+* Install `pipenv`  
+```pip install pipenv```   
+* Install the depencencies    
+```pipenv install scikit-learn==1.0.2 flask gunicorn --python=3.9```   
+1. scikit-learn: machine learning library
+2. flask: web service
+3. gunicorn: web server (deployment environment)    
+* Enter the pipenv virtual environment   
+```pipenv shell```
+* Activate the virtual environment   
+```. {<path>/activate}```
 
 
 # Lesson
