@@ -14,7 +14,7 @@
 ```. {<path>/activate}```    
 * gunicorn command    
 ```gunicorn --bind={0.0.0.0/9696} {function_name}:{app_name}```    
-* deploy??
+* deploy??    
 ```pipenv install --deploy --system```    
 1. tell Pipenv to install a Pipfile’s contents into its parent system with the --system flag
 2. --deploy will make sure your packages are properly locked in Pipfile.lock since it will check the hashes   
