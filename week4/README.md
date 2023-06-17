@@ -7,20 +7,31 @@
 1. scikit-learn: machine learning library
 2. flask: web service
 3. gunicorn: web server (deployment environment)
-4. --dev: Install both develop and defaul` package categories from Pipfile    
+4. Providing the --dev argument will put the dependency in a special [dev-packages] location   
 * Enter the pipenv virtual environment   
 ```pipenv shell```
 * Activate the virtual environment   
 ```. {<path>/activate}```    
-* gunicorn command
+* gunicorn command    
 ```gunicorn --bind={0.0.0.0/9696} {function_name}:{app_name}```    
+* deploy??
+```pipenv install --deploy --system```    
+1. tell Pipenv to install a Pipfile’s contents into its parent system with the --system flag
+2. --deploy will make sure your packages are properly locked in Pipfile.lock since it will check the hashes   
 
 ## Docker
-[setup code](https://github.com/DataTalksClub/mlops-zoomcamp/tree/main/04-deployment/web-service)    
 ```docker run -it --rm -p 9696:9696  ride-duration-prediction-service:v1``` 
 * -it: interactive mode
 * --rm: remove the image after it stops
 * -p: port mapping    
+[setup code](https://github.com/DataTalksClub/mlops-zoomcamp/tree/main/04-deployment/web-service)    
+    
+```docker ps```      
+list all running containers      
+```docker kill {container_id}```    
+kill a container    
+
+#### optional
 [setup on cloud with AWS Elastic Beanstalk](https://github.com/alexeygrigorev/mlbookcamp-code/blob/master/course-zoomcamp/05-deployment/07-aws-eb.md)    
 [kubertenes 1](https://github.com/alexeygrigorev/mlbookcamp-code/blob/master/course-zoomcamp/10-kubernetes/05-kubernetes-intro.md)    
 [kubertenes 2](https://github.com/alexeygrigorev/mlbookcamp-code/blob/master/course-zoomcamp/10-kubernetes/06-kubernetes-simple-service.md)    
@@ -34,10 +45,21 @@ When it comes to deployment, should know it is offline/batch (model can be waite
 
 ### virtual environment from pipenv
 When activating the environment, only installed packages can be used    
-example: the above command, that installs scikit-learn, doesn't install `requests` package so python files with that package can't be run
+example: the above command, that installs scikit-learn, doesn't install `requests` package so python files with that package can't be run    
+
+#### pipfile and pipfile.lock
+pipfile: list of packages    
+pipfile.lock: list of packages with more details (avoiding the risks of automatically upgrading packages that depend upon each other and breaking your project dependency tree)
+
 
 ### docker instruction
 COPY ["file1", "file2"(optional), "dest directory"]    
 WORKDIR: set the working directory for any RUN, CMD, ENTRYPOINT, COPY and ADD instructions    
 ENTRYPOINT ["gunicorn", "--bind=0.0.0.0/9696", "predict:app"]: tell docker to run this command when the container starts    
-EXPOSE 9696: tell docker to open this port 9696   
+EXPOSE 9696: tell docker to open this port 9696     
+
+### scikit-learn pipeline
+no need to store a model and a preprocessing model separately, just store in the pipeline    
+
+### tracking server
+if it is down, we can access the model directly from a storage on cloud    
