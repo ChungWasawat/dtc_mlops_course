@@ -62,4 +62,14 @@ EXPOSE 9696: tell docker to open this port 9696
 no need to store a model and a preprocessing model separately, just store in the pipeline    
 
 ### tracking server
-if it is down, we can access the model directly from a storage on cloud    
+if it is down, we can access the model directly from a storage on cloud without run id from tracking server    
+
+### os and system
+#### os
+```os.getenv("variable_name", "default_value")```    
+#### system
+* sys package: let command line arguments passed to a Python script    
+* set `sys.argv[1]` as the first argument on command line    
+can use `argparse ` ??
+### jupyter notebook to script
+```jupyter nbconvert --to script {notebook_name}.ipynb```    
