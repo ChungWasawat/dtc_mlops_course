@@ -73,3 +73,9 @@ if it is down, we can access the model directly from a storage on cloud without 
 can use `argparse ` ??
 ### jupyter notebook to script
 ```jupyter nbconvert --to script {notebook_name}.ipynb```    
+
+### AWS file system
+if folder name has space in it
+* for http url, it thinks space is the same as `+`
+* in command line, it is needed `""` to wrap the folder name
+* `s3fs` is used to all pandas to read and write on s3
