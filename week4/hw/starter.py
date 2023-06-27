@@ -45,6 +45,9 @@ def ride_prediction_hw(
     pred_value = predict(df)
     print(f'the mean of prediction from month ={month:02} and year ={year:04} is ',pred_value.mean())
 
+    # upload to cloud storage
+
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Process ride duration prediction.')
     parser.add_argument('year', type=int, help='enter year from 2022')
