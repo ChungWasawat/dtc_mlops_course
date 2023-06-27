@@ -4,14 +4,9 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-scikit-learn = "==1.2.2"
-pandas = "*"
-pyarrow = "*"
-fastparquet = "*"
-s3fs = "*"
+scikit-learn = "==1.0.2"
 
 [dev-packages]
-argparse = "*"
 
 [requires]
 python_version = "3.10"
