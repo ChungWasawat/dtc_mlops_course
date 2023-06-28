@@ -40,4 +40,6 @@ Compare data distribution between reference (training set?) and current batch da
 create a window function to compare data distribution for each window
 
 #### monitoring scheme
-![picture from ml ops zoomcamp course -video 5.1](https://github.com/ChungWasawat/dtc_mlops_course/tree/main/week5/img)
+<a>
+  <img src="img/pic1-lesson5.1.png">
+</a>
