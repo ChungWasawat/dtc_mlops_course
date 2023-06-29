@@ -54,5 +54,4 @@ create a window function to compare data distribution for each window
 - evidently: Evidently is an open-source Python library for data scientists and ML engineers. It helps evaluate, test, and monitor the performance of ML models from validation to production. It works with tabular, text data and embeddings
 
 ## Docker-compose
-* never build docker compose
-```docker-compose up --build```
+* never build docker compose ```docker-compose up --build```     
