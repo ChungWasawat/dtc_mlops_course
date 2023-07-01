@@ -33,7 +33,10 @@ create table hw_metrics(
 	num_drifted_columns integer,
 	share_missing_values float,
     fare_quantile_50 float,
-    prediction_corr float
+    corr_pred_x_passenger_count float,
+    corr_pred_x_trip_dist float,
+    corr_pred_x_fare_amount float,
+    corr_pred_x_total_amount float
 )
 """
 
@@ -88,14 +91,19 @@ def calculate_metrics_postgresql(curr, i):
 	prediction_drift = result['metrics'][0]['result']['drift_score']
 	num_drifted_columns = result['metrics'][1]['result']['number_of_drifted_columns']
 	share_missing_values = result['metrics'][2]['result']['current']['share_of_missing_values']
-	fare_quantile_50 = result['metrics'][3]['result']
-	prediction_corr = result['metrics'][4]['result']
+	fare_quantile_50 = result['metrics'][3]['result']['current']['value']
+	corr_pred_pass = result['metrics'][4]['result']['current']['pearson']['values']['y'][0]
+	corr_pred_trip = result['metrics'][4]['result']['current']['pearson']['values']['y'][1]
+	corr_pred_fare = result['metrics'][4]['result']['current']['pearson']['values']['y'][2]
+	corr_pred_total = result['metrics'][4]['result']['current']['pearson']['values']['y'][3]
 
 	# add the result to postgres db
 	curr.execute(
-		"insert into dummy_metrics(timestamp, prediction_drift, num_drifted_columns, share_missing_values, fare_quantile_50, prediction_corr) \
-	    values (%s, %s, %s, %s, %s, %s)",
-		(begin + datetime.timedelta(i), prediction_drift, num_drifted_columns, share_missing_values, fare_quantile_50, prediction_corr)
+		"insert into hw_metrics(timestamp, prediction_drift, num_drifted_columns, share_missing_values, fare_quantile_50, \
+		corr_pred_x_passenger_count, corr_pred_x_trip_dist, corr_pred_x_fare_amount, corr_pred_x_total_amount) \
+	    values (%s, %s, %s, %s, %s, %s, %s, %s, %s)",
+		(begin + datetime.timedelta(i), prediction_drift, num_drifted_columns, share_missing_values, fare_quantile_50, \
+   		corr_pred_pass, corr_pred_trip, corr_pred_fare, corr_pred_total)
 	)
 	
 @flow
