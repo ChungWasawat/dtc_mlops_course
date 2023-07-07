@@ -21,7 +21,7 @@ def prepare_data(df: pd.DataFrame, categorical: list):
     return df
 
 def main(
-    year: str = "2023",
+    year: str = "2022",
     month: str = "01",
 ) -> None:
 
