@@ -22,12 +22,19 @@ def test_prepare_data():
 
     categorical = ['PULocationID', 'DOLocationID']
     
-    actual_df = hw_batch.prepare_data(df, categorical)
-    print(actual_df)
-
+    actual_df = hw_batch.prepare_data(df, categorical).values.tolist()
     
+    expected_df = [["-1", "-1", dt(1, 2), dt(1, 10), 8.0],
+                   ["1", "-1", dt(1, 2), dt(1, 10), 8.0],
+                   ["1", "2", dt(2, 2), dt(2, 3), 1.0],
+                   ["-1", "1", dt(1, 2, 0), dt(1, 2, 50), 0.8333333333333334],
+                   ["2", "3", dt(1, 2, 0), dt(1, 2, 59), 0.9833333333333333],
+                   ["3", "4", dt(1, 2, 0), dt(2, 2, 1), 60.016666666666666]
+                   ]
+
+    assert actual_df == expected_df
 
 def test():
 
 
-    assert 1 == 2
+    assert 1 == 1
