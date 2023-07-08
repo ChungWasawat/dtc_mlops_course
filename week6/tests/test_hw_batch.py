@@ -32,7 +32,9 @@ def test_prepare_data():
         columns=['PULocationID', 'DOLocationID', 'tpep_pickup_datetime', 'tpep_dropoff_datetime', 'duration'])
 
 
-    diff = DeepDiff( actual_df.to_dict(), expected_df.to_dict(), ignore_order=True)
+    diff = DeepDiff( actual_df.to_dict(), expected_df.to_dict(), significant_digits=1 ,ignore_order=True)
+    
     assert 'type_changes' not in diff
+    assert 'values_changed' not in diff
 
 # Question 4
