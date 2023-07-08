@@ -1,0 +1,7 @@
+services:
+  homework_s3:
+    image: localstack/localstack
+    ports:
+      - "4566:4566"
+    environment:
+      - LOCALSTACK_SERVICES=s3 
