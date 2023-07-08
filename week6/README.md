@@ -1,6 +1,7 @@
 ```pipenv install --dev deepdiff```  
 
-```docker run -it --rm \
+```
+    docker run -it --rm \
     -p 8080:8080 \
     -e PREDICTIONS_STREAM_NAME="ride_predictions" \
     -e RUN_ID="Test123" \
