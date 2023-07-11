@@ -5,3 +5,7 @@ services:
       - "4566:4566"
     environment:
       - LOCALSTACK_SERVICES=s3 
+    # ro = read only
+    #volumes:
+    #  - /var/opt/my_website/dist:/app/data:ro
+  

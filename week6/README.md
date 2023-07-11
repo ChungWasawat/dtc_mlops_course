@@ -15,14 +15,15 @@
 ```set -e``` -find one non-zero error code, terminate the script     
 ```echo $?``` -show error code of previous command -0=successful    
 ```aws --endpoint-url=http://localhost:4566 s3 mb s3://nyc-duration```     
-```aws --endpoint-url=http://localhost:4566 s3 ls``` 
+```aws --endpoint-url=http://localhost:4566 s3 ls```     
+```aws --endpoint-url=http://localhost:4566 s3 ls nyc-duration/in/ --summarize```     
 
 ###### set global var
 ```
 export INPUT_FILE_PATTERN="s3://nyc-duration/in/{year:04d}-{month:02d}.parquet"
 export OUTPUT_FILE_PATTERN="s3://nyc-duration/out/{year:04d}-{month:02d}.parquet"
 ```
-
-# documentation
+`./directory/run.sh` run script     
+# document
 * [localstack](https://github.com/localstack/localstack)
 * [localstack -docker compose configuration](https://docs.localstack.cloud/getting-started/installation/#docker-compose)

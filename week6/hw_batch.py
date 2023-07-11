@@ -17,15 +17,7 @@ def get_output_path(year, month):
     output_pattern = os.getenv('OUTPUT_FILE_PATTERN', default_output_pattern)
     return output_pattern.format(year=year, month=month)
 
-def read_data(filename: str):
-    S3_ENDPOINT_URL = os.getenv('S3_ENDPOINT_URL', 'http://localhost:4566')
-
-    options = {
-        'client_kwargs': {
-            'endpoint_url': S3_ENDPOINT_URL
-        }
-    }
-
+def read_data(filename: str, options: dict):
     df = pd.read_parquet(filename, storage_options=options)
     return df
 
@@ -39,24 +31,49 @@ def prepare_data(df: pd.DataFrame, categorical: list):
 
     return df
 
+def save_data(df: pd.DataFrame, output_file: str):
+    S3_ENDPOINT_URL = os.getenv('S3_ENDPOINT_URL', 'http://localhost:4566')
+    
+    options = {
+        'client_kwargs': {
+            'endpoint_url': S3_ENDPOINT_URL
+        }
+    }
+
+    df.to_parquet(
+        output_file,
+        engine='pyarrow',
+        compression=None,
+        index=False,
+        storage_options=options
+    
+    )
+
 def main(
-    year: str = "2022",
-    month: str = "01",
+    year: str = 2022,
+    month: str = 1,
 ) -> None:
 
     input_file = get_input_path(year, month)
     output_file = get_output_path(year, month)
-
     # input_file = f'https://d37ci6vzurychx.cloudfront.net/trip-data/yellow_tripdata_{year:04d}-{month:02d}.parquet'
     # output_file = f'results/type=yellow_year={year:04d}_month={month:02d}.parquet'
 
+    S3_ENDPOINT_URL = os.getenv('S3_ENDPOINT_URL', 'http://localhost:4566')
+    options = {
+        'client_kwargs': {
+            'endpoint_url': S3_ENDPOINT_URL
+        }
+    }
+    
+    # already have the model on local system
     with open('model.bin', 'rb') as f_in:
         dv, lr = pickle.load(f_in)
     
     categorical = ['PULocationID', 'DOLocationID']
 
     # read data
-    df = read_data(input_file)
+    df = read_data(input_file, options)
     # transform data
     df = prepare_data(df, categorical)
     # create ride_id
@@ -77,7 +94,9 @@ def main(
     df_result['predicted_duration'] = y_pred
 
 
-    df_result.to_parquet(output_file, engine='pyarrow', index=False)
+    # df_result.to_parquet(output_file, engine='pyarrow', index=False)
+    save_data(df_result, output_file)
 
 if __name__ == "__main__":
     main()
+    # print(get_output_path(2000,1))

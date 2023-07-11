@@ -36,5 +36,3 @@ def test_prepare_data():
     
     assert 'type_changes' not in diff
     assert 'values_changed' not in diff
-
-# Question 4
